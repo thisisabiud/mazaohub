@@ -1,54 +1,60 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:inventory/models/credentials.dart';
+import 'package:inventory/models/user.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-final authStateProvider = StateNotifierProvider<AuthStateNotifier, AuthState>(
-  (ref) => AuthStateNotifier(ref.read(
-      sharedPreferencesProvider as ProviderListenable<SharedPreferences>)),
-);
+class AuthNotifier extends StateNotifier<bool> {
+  AuthNotifier() : super(false);
 
-class AuthState {
-  final bool isAuthenticated;
-
-  AuthState({required this.isAuthenticated});
-}
-
-class AuthStateNotifier extends StateNotifier<AuthState> {
   final String api_url = dotenv.get('API_BASE_URL');
-  final SharedPreferences _sharedPreferences;
 
-  AuthStateNotifier(this._sharedPreferences)
-      : super(AuthState(isAuthenticated: false));
+  // StreamController<User?> _userController = StreamController<User?>.broadcast();
+  // Stream<User?> get currentUser => _userController.stream;
 
-  Future<void> login(String email, String password) async {
+  late SharedPreferences preferences;
+
+  Future<void> login(Credentials credentials) async {
+    preferences = await SharedPreferences.getInstance();
     try {
       final response = await http.post(Uri.parse("${api_url}login"),
-          body: {'email': email, 'password': password});
-
+          body: credentials.toJson());
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final sessionToken = responseData['token'];
-        await _sharedPreferences.setString('token', sessionToken);
-        state = AuthState(isAuthenticated: true);
+        preferences.setInt("userId", responseData["user"]["id"]);
+        state = true;
       }
     } catch (e) {
       throw Exception('Login Failed');
     }
   }
 
-  void logout() async {
-    await _clearSession();
-    state = AuthState(isAuthenticated: false);
+  Future<void> signup(User user) async {
+    try {
+      final response =
+          await http.post(Uri.parse("${api_url}register"), body: user.toJson());
+      if (response.statusCode == 200) {}
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
-  Future<void> _clearSession() async {
-    await _sharedPreferences.remove('token');
+  void logout() {
+    state = false;
   }
 }
 
-final sharedPreferencesProvider = FutureProvider<SharedPreferences>(
-  (ref) async => await SharedPreferences.getInstance(),
-);
+final authStateNotifierProvider =
+    StateNotifierProvider<AuthNotifier, bool>((ref) {
+  return AuthNotifier();
+});
+
+final loginProvider =
+    FutureProvider.family<void, Credentials>((ref, credentials) {
+  final authProvider = ref.watch(authStateNotifierProvider.notifier);
+  return authProvider.login(credentials);
+});
