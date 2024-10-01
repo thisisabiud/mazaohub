@@ -5,7 +5,7 @@ import 'package:inventory/utils/providers.dart';
 class CustomerDetailsScreen extends ConsumerWidget {
   final int customerId;
 
-  CustomerDetailsScreen({required this.customerId});
+  const CustomerDetailsScreen({super.key, required this.customerId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,11 +13,11 @@ class CustomerDetailsScreen extends ConsumerWidget {
     final customerAsyncValue = ref.watch(customerDetailsProvider(customerId));
 
     return Scaffold(
-      appBar: AppBar(title: Text('Customer Details')),
+      appBar: AppBar(title: const Text('Customer Details')),
       body: customerAsyncValue.when(
         data: (customer) {
           if (customer == null) {
-            return Center(child: Text('Customer not found'));
+            return const Center(child: Text('Customer not found'));
           }
           return SingleChildScrollView(
             child: Column(
@@ -31,8 +31,8 @@ class CustomerDetailsScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Name: ${customer.name}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 8),
+                          Text('Name: ${customer.name}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
                           Text('Email: ${customer.email}'),
                           Text('TIN: ${customer.TIN}'),
                           Text('Address: ${customer.address}'),
@@ -42,8 +42,8 @@ class CustomerDetailsScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Text('Sales History', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
                 // salesFuture.when(
@@ -77,7 +77,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             ),
           );
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),
       ),
     );

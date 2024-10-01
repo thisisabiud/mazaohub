@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AuthState {
   final bool isAuthenticated;
@@ -11,25 +15,46 @@ class AuthState {
 class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier() : super(AuthState(isAuthenticated: false));
 
+  final api_url = dotenv.env["API_BASE_URL"];
+
   Future<void> login(String username, String password) async {
-    // Here you would typically validate credentials against a backend
-    // For this example, we'll just check if the username and password are not empty
     if (username.isNotEmpty && password.isNotEmpty) {
       final prefs = await SharedPreferences.getInstance();
+      final response = await http.post(Uri.parse("${api_url}login"),
+          body: {"email": username, "password": password});
+      final responseData = jsonDecode(response.body);
+      prefs.setInt("userId", responseData["user"]["id"]);
       await prefs.setBool('isAuthenticated', true);
-      await prefs.setString('username', username);
-      state = AuthState(isAuthenticated: true, username: username);
+      await prefs.setString('username', responseData["user"]["name"]);
+      state = AuthState(
+          isAuthenticated: true, username: responseData["user"]["name"]);
     }
   }
 
-  Future<void> register(String username, String password) async {
-    // Here you would typically send registration data to a backend
-    // For this example, we'll just store the username
-    if (username.isNotEmpty && password.isNotEmpty) {
+  Future<void> register(
+      {required String name,
+      required String reference_no,
+      required String address,
+      required String email,
+      required String phone,
+      required String password}) async {
+    if (name.isNotEmpty && password.isNotEmpty) {
       final prefs = await SharedPreferences.getInstance();
+      final result = await http.post(Uri.parse("${api_url}register"), body: {
+        "name": name,
+        "reference_no": reference_no,
+        "address": address,
+        "email": email,
+        "phone": phone,
+        "register_as": "D",
+        "password": password
+      });
+      final response = jsonDecode(result.body);
       await prefs.setBool('isAuthenticated', true);
-      await prefs.setString('username', username);
-      state = AuthState(isAuthenticated: true, username: username);
+      await prefs.setInt('userId', response["user"]["id"]);
+      await prefs.setString('username', response["user"]["name"]);
+      state =
+          AuthState(isAuthenticated: true, username: response["user"]["name"]);
     }
   }
 

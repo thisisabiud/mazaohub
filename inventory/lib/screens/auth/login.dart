@@ -7,10 +7,12 @@ class LoginScreen extends ConsumerWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -18,23 +20,23 @@ class LoginScreen extends ConsumerWidget {
           children: [
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: const InputDecoration(labelText: 'Username'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            SizedBox(height: 24),
-            ElevatedButton(
+            const SizedBox(height: 24),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [ElevatedButton(
               onPressed: () {
                 ref.read(authProvider.notifier).login(
                   _usernameController.text,
                   _passwordController.text,
                 );
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
             TextButton(
               onPressed: () {
@@ -43,8 +45,8 @@ class LoginScreen extends ConsumerWidget {
                   MaterialPageRoute(builder: (context) => RegisterScreen()),
                 );
               },
-              child: Text('Register'),
-            ),
+              child: const Text('Register'),
+            ),],),
           ],
         ),
       ),

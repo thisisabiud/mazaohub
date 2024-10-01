@@ -3,18 +3,18 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inventory/screens/auth/login.dart';
 import 'package:inventory/screens/customers/customers.dart';
+import 'package:inventory/screens/home.dart';
 import 'package:inventory/services/auth_state.dart';
-import 'package:inventory/utils/router_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();  
-  sqfliteFfiInit();  
+  WidgetsFlutterBinding.ensureInitialized();
+  sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
-  
+
   await dotenv.load(fileName: ".env");
-  
+
   final container = ProviderContainer();
   await container.read(authProvider.notifier).checkAuth();
 
@@ -27,16 +27,19 @@ Future<void> main() async {
 }
 
 class MyAppWithAnimation extends ConsumerWidget {
+  const MyAppWithAnimation({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: FadeIndexedStack(
         index: authState.isAuthenticated ? 1 : 0,
         children: [
           LoginScreen(),
-          CustomerListScreen(),
+          const LandingPage(),
         ],
       ),
     );
@@ -49,17 +52,18 @@ class FadeIndexedStack extends StatefulWidget {
   final Duration duration;
 
   const FadeIndexedStack({
-    Key? key,
+    super.key,
     required this.index,
     required this.children,
     this.duration = const Duration(milliseconds: 800),
-  }) : super(key: key);
+  });
 
   @override
   _FadeIndexedStackState createState() => _FadeIndexedStackState();
 }
 
-class _FadeIndexedStackState extends State<FadeIndexedStack> with SingleTickerProviderStateMixin {
+class _FadeIndexedStackState extends State<FadeIndexedStack>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -94,24 +98,3 @@ class _FadeIndexedStackState extends State<FadeIndexedStack> with SingleTickerPr
     );
   }
 }
-
-
-// class MyApp extends ConsumerWidget {
-//   const MyApp({super.key});
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final router = ref.watch(routerProvider);
-//     return MaterialApp.router(
-//       title: 'Flutter Demo',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
-//         useMaterial3: true,
-//         primaryColorLight: const Color.fromARGB(255, 255, 255, 255),
-//       ),
-//       routerConfig: router,
-//     );
-//   }
-// }

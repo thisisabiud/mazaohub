@@ -6,7 +6,6 @@ class User {
   String email;
   String phone;
   String password;
-  String register_as;
   String address;
 
   User(
@@ -15,18 +14,17 @@ class User {
       required this.email,
       required this.password,
       required this.phone,
-      required this.register_as,
       required this.address});
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
-      'reference_no': reference_no,
-      'address': address,
-      'email': email,
-      'phone': phone,
-      'register_as': register_as,
-      'password': password
+      "name": name,
+      "reference_no": reference_no,
+      "address": address,
+      "email": email,
+      "phone": phone,
+      "register_as": "D",
+      "password": password
     };
   }
 }

@@ -4,6 +4,8 @@ import 'package:inventory/models/customer.dart';
 import 'package:inventory/utils/providers.dart';
 
 class AddCustomerScreen extends ConsumerStatefulWidget {
+  const AddCustomerScreen({super.key});
+
   @override
   _AddCustomerScreenState createState() => _AddCustomerScreenState();
 }
@@ -19,15 +21,15 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Customer')),
+      appBar: AppBar(title: const Text('Add Customer')),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(labelText: 'Name'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a name';
@@ -37,7 +39,7 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
             ),
             TextFormField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter an email';
@@ -47,7 +49,7 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
             ),
             TextFormField(
               controller: _tinController,
-              decoration: InputDecoration(labelText: 'TIN'),
+              decoration: const InputDecoration(labelText: 'TIN'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a TIN';
@@ -57,7 +59,7 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
             ),
             TextFormField(
               controller: _addressController,
-              decoration: InputDecoration(labelText: 'Address'),
+              decoration: const InputDecoration(labelText: 'Address'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter an address';
@@ -67,7 +69,7 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
             ),
             TextFormField(
               controller: _phoneController,
-              decoration: InputDecoration(labelText: 'Phone Number'),
+              decoration: const InputDecoration(labelText: 'Phone Number'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a phone number';
@@ -75,7 +77,7 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
@@ -92,7 +94,7 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
                   Navigator.of(context).pop();
                 }
               },
-              child: Text('Save Customer'),
+              child: const Text('Save Customer'),
             ),
           ],
         ),

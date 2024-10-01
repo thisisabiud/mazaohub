@@ -1,7 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inventory/data/database.dart';
 import 'package:inventory/models/customer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+
+final navigationProvider = StateProvider<String?>((ref) => null);
+
+final usernameProvider = FutureProvider<String>((ref) async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString('username') ?? 'Guest';
+});
 // Database provider
 final databaseProvider = Provider<DatabaseHelper>((ref) {
   return DatabaseHelper.instance;

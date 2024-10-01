@@ -44,8 +44,6 @@ class CustomerRepository implements CustomerService {
     final responseData = jsonDecode(response.body) as Map<String, dynamic>;
     final customerList = responseData['client'] as List;
     final customers = customerList.map((data) => Customer.fromJson(data)).toList();
-
-    int? x = preferences.getInt("userId");
     return customers;
   }
 

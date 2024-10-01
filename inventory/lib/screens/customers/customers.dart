@@ -6,6 +6,8 @@ import 'package:inventory/services/auth_state.dart';
 import 'package:inventory/utils/providers.dart';
 
 class CustomerListScreen extends ConsumerWidget {
+  const CustomerListScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final customersAsyncValue = ref.watch(customersProvider);
@@ -33,8 +35,8 @@ class CustomerListScreen extends ConsumerWidget {
                 background: Container(
                   color: Colors.red,
                   alignment: Alignment.centerRight,
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: Icon(Icons.delete, color: Colors.white),
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: const Icon(Icons.delete, color: Colors.white),
                 ),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
@@ -83,11 +85,11 @@ class CustomerListScreen extends ConsumerWidget {
             },
           );
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
