@@ -72,7 +72,7 @@ class LandingPage extends ConsumerWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SalesListScreen()),
+                                  builder: (context) => SalesScreen()),
                             );
                           },
                         ),
@@ -83,7 +83,7 @@ class LandingPage extends ConsumerWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CustomerListScreen()),
+                                  builder: (context) => const CustomerListScreen()),
                             );
                           },
                         ),
@@ -114,9 +114,9 @@ class NavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
+      style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),

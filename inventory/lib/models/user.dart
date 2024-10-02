@@ -8,23 +8,22 @@ class User {
   String password;
   String address;
 
-  User(
-      {required this.name,
-      required this.reference_no,
-      required this.email,
-      required this.password,
-      required this.phone,
-      required this.address});
+  User({
+    required this.name,
+    required this.reference_no,
+    required this.email,
+    required this.password,
+    required this.phone,
+    required this.address,
+  });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "name": name,
-      "reference_no": reference_no,
-      "address": address,
-      "email": email,
-      "phone": phone,
-      "register_as": "D",
-      "password": password
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "reference_no": reference_no,
+        "address": address,
+        "email": email,
+        "phone": phone,
+        "register_as": "D",
+        "password": password,
+      };
 }

@@ -40,7 +40,9 @@ class CustomerListScreen extends ConsumerWidget {
                 ),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  ref.read(databaseProvider).deleteCustomer(customer.id!);
+                  ref
+                      .read(databaseProvider)
+                      .deleteCustomer(customer.id!);
                   ref.refresh(customersProvider);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('${customer.name} deleted')),
@@ -56,11 +58,13 @@ class CustomerListScreen extends ConsumerWidget {
                             "Are you sure you want to delete this customer?"),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () => Navigator.of(context).pop(false),
+                            onPressed: () =>
+                                Navigator.of(context).pop(false),
                             child: const Text("CANCEL"),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.of(context).pop(true),
+                            onPressed: () =>
+                                Navigator.of(context).pop(true),
                             child: const Text("DELETE"),
                           ),
                         ],
@@ -93,7 +97,7 @@ class CustomerListScreen extends ConsumerWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddCustomerScreen()),
+            MaterialPageRoute(builder: (context) => const AddCustomerScreen()),
           );
         },
       ),

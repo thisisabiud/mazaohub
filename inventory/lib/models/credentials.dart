@@ -1,8 +1,8 @@
 class Credentials {
-  String email;
-  String password;
+  final String email;
+  final String password;
 
-  Credentials({required this.email, required this.password});
+  const Credentials({required this.email, required this.password});
 
   factory Credentials.fromJson(Map<String, dynamic> json) {
     return Credentials(email: json['email'], password: json['password']);

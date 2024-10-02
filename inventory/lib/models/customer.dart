@@ -2,26 +2,26 @@ class Customer {
   int? id;
   String name;
   String email;
-  String TIN;
+  String tin;
   String address;
-  String phone_number;
+  String phoneNumber;
 
   Customer(
       {this.id,
       required this.email,
-      required this.TIN,
+      required this.tin,
       required this.address,
       required this.name,
-      required this.phone_number});
+      required this.phoneNumber});
 
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
         id: json['id'],
-        TIN: json['TIN'],
+        tin: json['TIN'],
         address: json['address'],
         email: json['email'],
         name: json['name'],
-        phone_number: json['phone_number']);
+        phoneNumber: json['phone_number']);
   }
 
   Map<String, dynamic> toJson() {
@@ -29,9 +29,9 @@ class Customer {
       "id": id,
       "name": name,
       "email": email,
-      "phone_number": phone_number,
+      "phone_number": phoneNumber,
       "address": address,
-      "TIN": TIN,
+      "TIN": tin,
     };
   }
 }

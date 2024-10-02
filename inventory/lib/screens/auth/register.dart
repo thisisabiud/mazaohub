@@ -69,7 +69,7 @@ class RegisterScreen extends ConsumerWidget {
               onPressed: () {
                 ref.read(authProvider.notifier).register(
                     name: _nameController.text,
-                    reference_no: _referenceController.text,
+                    referenceNo: _referenceController.text,
                     address: _addressController.text,
                     email: _emailController.text,
                     password: _passwordController.text,

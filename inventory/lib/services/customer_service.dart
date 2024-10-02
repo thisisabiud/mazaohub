@@ -10,7 +10,7 @@ abstract class CustomerService {
   Future<List<Customer>> getCustomersById();
   Future<bool> addCustomer(Customer customer);
   Future<bool> updateCustomer(Customer customer);
-  Future<bool> deleteCustomer();
+  Future<bool> deleteCustomer(int id);
 }
 
 class CustomerRepository implements CustomerService {
@@ -31,9 +31,14 @@ class CustomerRepository implements CustomerService {
   }
 
   @override
-  Future<bool> deleteCustomer() {
-    // TODO: implement deleteCustomer
-    throw UnimplementedError();
+  Future<bool> deleteCustomer(int id) async {
+    final response = await http.delete(
+      Uri.parse("${api_url}ema/pos/get_client/$id/delete"),
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -48,9 +53,15 @@ class CustomerRepository implements CustomerService {
   }
 
   @override
-  Future<bool> updateCustomer(Customer customer) {
-    // TODO: implement updateCustomer
-    throw UnimplementedError();
+  Future<bool> updateCustomer(Customer customer) async {
+    final response = await http.put(
+      Uri.parse("${api_url}ema/pos/get_client/${customer.id}"),
+      body: jsonEncode(customer),
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }
 

@@ -84,9 +84,9 @@ class _AddCustomerScreenState extends ConsumerState<AddCustomerScreen> {
                   final customer = Customer(
                     name: _nameController.text,
                     email: _emailController.text,
-                    TIN: _tinController.text,
+                    tin: _tinController.text,
                     address: _addressController.text,
-                    phone_number: _phoneController.text,
+                    phoneNumber: _phoneController.text,
                   );
                   final db = ref.read(databaseProvider);
                   await db.insertCustomer(customer);

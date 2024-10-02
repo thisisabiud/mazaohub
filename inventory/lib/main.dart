@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inventory/screens/auth/login.dart';
-import 'package:inventory/screens/customers/customers.dart';
 import 'package:inventory/screens/home.dart';
 import 'package:inventory/services/auth_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 Future<void> main() async {
@@ -21,14 +19,14 @@ Future<void> main() async {
   runApp(
     UncontrolledProviderScope(
       container: container,
-      child: MyAppWithAnimation(),
+      child: const MyAppWithAnimation(),
     ),
   );
 }
 
 class MyAppWithAnimation extends ConsumerWidget {
   const MyAppWithAnimation({super.key});
-
+    
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
